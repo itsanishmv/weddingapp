@@ -2,7 +2,7 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import Homepage from './components/Homepage';
-import { useContext } from 'react/cjs/react.development';
+import React,{ useContext } from 'react';
 import { dataSharingPoint } from './components/Context';
 
 import { useEffect} from 'react';
