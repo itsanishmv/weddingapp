@@ -1,22 +1,17 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { dataSharingPoint } from "./Context";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 function Modal() {
-  const {
-    going,
-    setGoing,
-    showButtons,
-    setShowButtons,
-    setShowRsvp,
-    phone,
-    setPhone,
-    email,
-    setEmail,
-    name,
-    setName,
-  } = useContext(dataSharingPoint);
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [comments, setComments] = useState();
+  const [activeBtn, setActiveBtn] = useState(false);
+
+  const { going, setGoing, showButtons, setShowButtons, setShowRsvp } =
+    useContext(dataSharingPoint);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -43,6 +38,7 @@ function Modal() {
       name: name,
       email: email,
       phone: phone,
+      comment: comments,
     });
     setName("");
     setEmail("");
@@ -60,6 +56,7 @@ function Modal() {
     setEmail("");
     setPhone("");
   }
+  const disabledbutton = !name || !email || !phone;
   return (
     <div className=" h-screen fixed lg:w-[50%] w-[100%]  bg-black-opacity-50 flex justify-center items-center">
       <div
@@ -104,13 +101,20 @@ function Modal() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
-                type="phone"
+                type="number"
                 placeholder="contact"
               />
-
+              <textarea
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
+                className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
+                type="comments"
+                placeholder="leave a message ..."
+              />
               <div className="flex justify-between mt-4">
                 {!going && !showButtons && (
                   <button
+                    disabled={disabledbutton}
                     onClick={(e) => handleSubmitNotGoing(e)}
                     className="bg-[#F70000] text-white rounded p-2"
                   >
@@ -119,6 +123,7 @@ function Modal() {
                 )}
                 {going && !showButtons && (
                   <button
+                    disabled={disabledbutton}
                     onClick={(e) => handleSubmitGoing(e)}
                     className="bg-blue-400 text-white rounded p-2"
                   >

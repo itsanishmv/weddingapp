@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { dataSharingPoint } from "./Context";
 import Modal from "./Modal";
 import { db } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit } from "firebase/firestore";
 import Music from "./Music";
 
 function Homepage() {
@@ -68,6 +68,30 @@ function Homepage() {
       </div>
       <br />
       <br />
+      <br />
+      <br />
+      <br />
+      <h1 className="flex items-center justify-center text-xl font-fantasy">
+        Comments
+      </h1>
+      <div className="border-2 flex flex-col items-center h-60 overflow-y-scroll ">
+        {goingCount.map((items) => (
+          <div className="flex flex-col mt-[5px]">
+            <span className="font-bold">
+              {!items.comment == " " && items.name}
+            </span>
+            <span className=" w-72">{items.comment}</span>
+          </div>
+        ))}
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br /> <br />
       <br />
       <br />
       <br />
