@@ -31,7 +31,11 @@ function Homepage() {
         </div>
       )}
       <div>
-        <img className="h-screen w-[100%]" src="weddingcard.jpg" alt="card" />
+        <img
+          className="h-screen w-[100%] object-cover"
+          src="weddingcard.jpg"
+          alt="card"
+        />
       </div>
       <div className="flex flex-col items-center ">
         <h1 className="text-center font-cursive text-medium">
@@ -74,13 +78,13 @@ function Homepage() {
       <h1 className="flex items-center justify-center text-xl font-fantasy">
         Comments
       </h1>
-      <div className="border-2 flex flex-col items-center h-60 overflow-y-scroll ">
+      <div className="border-2 flex flex-col items-center h-80 overflow-y-scroll ">
         {goingCount.map((items) => (
           <div className="flex flex-col mt-[5px]">
-            <span className="font-bold">
+            <span className="font-bold capitalize">
               {!items.comment == " " && items.name}
             </span>
-            <span className=" w-72">{items.comment}</span>
+            <span className=" w-72 italic ">{items.comment}</span>
           </div>
         ))}
       </div>

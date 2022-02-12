@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { dataSharingPoint } from "./Context";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
+import Confetti from "react-confetti";
 
 function Modal() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [comments, setComments] = useState();
-  const [activeBtn, setActiveBtn] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const { going, setGoing, showButtons, setShowButtons, setShowRsvp } =
     useContext(dataSharingPoint);
@@ -36,10 +37,14 @@ function Modal() {
     const col = collection(db, "going");
     addDoc(col, {
       name: name,
-      email: email,
+      email: email ? email : "no-Email",
       phone: phone,
-      comment: comments,
+      comment: comments ? comments : false,
+    }).then(() => {
+      // setShowRsvp(false);
+      setShowConfetti(true);
     });
+
     setName("");
     setEmail("");
     setPhone("");
@@ -49,14 +54,16 @@ function Modal() {
     const col = collection(db, "not going");
     addDoc(col, {
       name: name,
-      email: email,
+      email: email ? email : " no-Email",
       phone: phone,
+    }).then(() => {
+      setShowRsvp(false);
     });
     setName("");
     setEmail("");
     setPhone("");
   }
-  const disabledbutton = !name || !email || !phone;
+  const disabledbutton = !name || !phone;
   return (
     <div className=" h-screen fixed lg:w-[50%] w-[100%]  bg-black-opacity-50 flex justify-center items-center">
       <div
@@ -82,7 +89,8 @@ function Modal() {
 
         {(going || !going) && !showButtons && (
           <>
-            <form className="flex flex-col justify-evenly" action="">
+            <Confetti run={showConfetti} width={700} height={500} />
+            <form className="flex flex-col justify-evenly">
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -90,19 +98,20 @@ function Modal() {
                 type="text"
                 placeholder="name"
               />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
-                type="email"
-                placeholder="email"
-              />
+
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
                 type="number"
                 placeholder="contact"
+              />
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
+                type="email"
+                placeholder="email (Optional)"
               />
               <textarea
                 value={comments}
@@ -116,7 +125,11 @@ function Modal() {
                   <button
                     disabled={disabledbutton}
                     onClick={(e) => handleSubmitNotGoing(e)}
-                    className="bg-[#F70000] text-white rounded p-2"
+                    className={
+                      disabledbutton
+                        ? "bg-gray-300 text-white rounded p-2"
+                        : "bg-[#F70000] text-white rounded p-2"
+                    }
                   >
                     I'm out
                   </button>
@@ -125,7 +138,11 @@ function Modal() {
                   <button
                     disabled={disabledbutton}
                     onClick={(e) => handleSubmitGoing(e)}
-                    className="bg-blue-400 text-white rounded p-2"
+                    className={
+                      disabledbutton
+                        ? "bg-gray-300 text-white rounded p-2"
+                        : `bg-blue-400 text-white rounded p-2`
+                    }
                   >
                     Count me
                   </button>
