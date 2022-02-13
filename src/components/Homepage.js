@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { dataSharingPoint } from "./Context";
 import Modal from "./Modal";
 import { db } from "./firebase";
-import { collection, getDocs, limit } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import Music from "./Music";
 
 function Homepage() {
@@ -19,7 +19,6 @@ function Homepage() {
     getDocs(getcol2).then((snapshot) => {
       setNotgoing(snapshot.docs.map((data) => data.data()));
     });
-    console.log(goingCount);
   }, []);
 
   return (
@@ -79,13 +78,16 @@ function Homepage() {
         Comments
       </h1>
       <div className="border-2 flex flex-col items-center h-80 overflow-y-scroll ">
-        {goingCount.map((items) => (
-          <div className="flex flex-col mt-[5px]">
-            <span className="font-bold capitalize">
-              {!items.comment == " " && items.name}
-            </span>
-            <span className=" w-72 italic ">{items.comment}</span>
-          </div>
+        {goingCount.concat(notGoing).map((items) => (
+          <>
+            {items.comment && (
+              <div className="flex flex-col mt-2">
+                <span className="font-bold capitalize ">{items.name}</span>
+
+                <span className=" w-72 italic ">{items.comment}</span>
+              </div>
+            )}
+          </>
         ))}
       </div>
       <br />

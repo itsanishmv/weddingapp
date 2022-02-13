@@ -3,6 +3,7 @@ import { dataSharingPoint } from "./Context";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
 import Confetti from "react-confetti";
+import SuccessMsg from "./SuccessMsg";
 
 function Modal() {
   const [name, setName] = useState();
@@ -10,6 +11,9 @@ function Modal() {
   const [phone, setPhone] = useState();
   const [comments, setComments] = useState();
   const [showConfetti, setShowConfetti] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
+  const [notgoingMsg, setNotGoingMsg] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { going, setGoing, showButtons, setShowButtons, setShowRsvp } =
     useContext(dataSharingPoint);
@@ -33,6 +37,7 @@ function Modal() {
     setShowButtons(false);
   }
   function handleSubmitGoing(e) {
+    setLoading(true);
     e.preventDefault();
     const col = collection(db, "going");
     addDoc(col, {
@@ -41,27 +46,30 @@ function Modal() {
       phone: phone,
       comment: comments ? comments : false,
     }).then(() => {
-      // setShowRsvp(false);
+      setLoading(false);
+      setTimeout(() => {
+        setShowRsvp(false);
+      }, 3500);
+      setSuccessMsg(true);
       setShowConfetti(true);
     });
-
-    setName("");
-    setEmail("");
-    setPhone("");
   }
   function handleSubmitNotGoing(e) {
+    setLoading(true);
     e.preventDefault();
     const col = collection(db, "not going");
     addDoc(col, {
       name: name,
       email: email ? email : " no-Email",
       phone: phone,
+      comment: comments ? comments : false,
     }).then(() => {
-      setShowRsvp(false);
+      setLoading(false);
+      setTimeout(() => {
+        setShowRsvp(false);
+      }, 2000);
+      setNotGoingMsg(true);
     });
-    setName("");
-    setEmail("");
-    setPhone("");
   }
   const disabledbutton = !name || !phone;
   return (
@@ -86,10 +94,21 @@ function Modal() {
             </button>
           </div>
         )}
+        {successMsg && (
+          <div className="flex items-center">
+            <Confetti
+              run={showConfetti}
+              recycle={false}
+              width={700}
+              height={500}
+            />
 
-        {(going || !going) && !showButtons && (
+            <SuccessMsg />
+          </div>
+        )}
+        {notgoingMsg && <SuccessMsg notgoing={true} />}
+        {(going || !going) && !showButtons && !successMsg && !notgoingMsg && (
           <>
-            <Confetti run={showConfetti} width={700} height={500} />
             <form className="flex flex-col justify-evenly">
               <input
                 value={name}
@@ -128,10 +147,14 @@ function Modal() {
                     className={
                       disabledbutton
                         ? "bg-gray-300 text-white rounded p-2"
-                        : "bg-[#F70000] text-white rounded p-2"
+                        : "bg-[#f73d3de7] text-white rounded p-2"
                     }
                   >
-                    I'm out
+                    {loading ? (
+                      <img className="h-6 w-12" src="loading.svg" alt="asd" />
+                    ) : (
+                      "I'm out"
+                    )}
                   </button>
                 )}
                 {going && !showButtons && (
@@ -144,7 +167,11 @@ function Modal() {
                         : `bg-blue-400 text-white rounded p-2`
                     }
                   >
-                    Count me
+                    {loading ? (
+                      <img className="h-6 w-16" src="loading.svg" alt="asd" />
+                    ) : (
+                      "Count me"
+                    )}
                   </button>
                 )}
 

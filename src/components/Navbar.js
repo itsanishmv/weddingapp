@@ -14,7 +14,7 @@ function Navbar() {
   }
 
   return (
-    <div className="lg:w-[50%] flex fixed w-[100%] bottom-0.5 bg-slate-300 border-2 px-4 py-1 justify-between">
+    <div className="lg:w-[50%] flex fixed w-[100%] bottom-0 bg-slate-300 border-2 px-4 py-1 justify-between">
       <button onClick={handleOnclick} className="flex flex-col items-center">
         <img className="h-6 " src="invite.png" alt="invite" />
         <span>rsvp</span>
