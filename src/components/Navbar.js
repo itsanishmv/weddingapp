@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { dataSharingPoint } from "./Context";
 
 function Navbar() {
-  const { setShowRsvp, setShowButtons, setMusic } =
+  const { setShowRsvp, setShowButtons, setMusic, setShowContact } =
     useContext(dataSharingPoint);
   // console.log(showRsvp);
   function handleOnclick() {
@@ -11,6 +11,9 @@ function Navbar() {
   }
   function handleMusic() {
     setMusic(true);
+  }
+  function handleContact() {
+    setShowContact(true);
   }
 
   return (
@@ -28,7 +31,7 @@ function Navbar() {
           <span>map</span>
         </a>
       </button>
-      <button className="flex flex-col items-center">
+      <button onClick={handleContact} className="flex flex-col items-center">
         <img className="h-6 " src="phone-call.png" alt="contact" />
         <span>contact</span>
       </button>

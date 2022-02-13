@@ -6,20 +6,24 @@ import { collection, getDocs } from "firebase/firestore";
 import Music from "./Music";
 
 function Homepage() {
-  const { showRsvp, music } = useContext(dataSharingPoint);
+  const { showRsvp, music, successMsg, notgoingMsg } =
+    useContext(dataSharingPoint);
   const [goingCount, setGoingCount] = useState([]);
   const [notGoing, setNotgoing] = useState([]);
 
   useEffect(() => {
     const getCol = collection(db, "going");
     const getcol2 = collection(db, "not going");
-    getDocs(getCol).then((snapshot) => {
-      setGoingCount(snapshot.docs.map((data) => data.data()));
-    });
-    getDocs(getcol2).then((snapshot) => {
-      setNotgoing(snapshot.docs.map((data) => data.data()));
-    });
-  }, []);
+    function getData() {
+      getDocs(getCol).then((snapshot) => {
+        setGoingCount(snapshot.docs.map((data) => data.data()));
+      });
+      getDocs(getcol2).then((snapshot) => {
+        setNotgoing(snapshot.docs.map((data) => data.data()));
+      });
+    }
+    getData();
+  }, [successMsg, notgoingMsg]);
 
   return (
     <div>
@@ -81,7 +85,7 @@ function Homepage() {
         {goingCount.concat(notGoing).map((items) => (
           <>
             {items.comment && (
-              <div className="flex flex-col mt-2">
+              <div className="flex flex-col mt-2 bg-gray-100 p-2">
                 <span className="font-bold capitalize ">{items.name}</span>
 
                 <span className=" w-72 italic ">{items.comment}</span>

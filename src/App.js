@@ -6,8 +6,9 @@ import React,{ useContext } from 'react';
 import { dataSharingPoint } from './components/Context';
 
 import { useEffect} from 'react';
+import Contact from './components/Contact';
 function App() {
-  const { setStart} = useContext(dataSharingPoint)
+  const { setStart , showContact} = useContext(dataSharingPoint)
   
   useEffect(() => {
     setStart(true)
@@ -18,7 +19,10 @@ function App() {
          <Homepage />
       </div>
       {/* {start &&<Music/>} */}
-      
+      <div className='flex justify-center fixed top-[50%] '>
+      {showContact && <Contact/>}
+      </div>
+     
       <Navbar />
     </div>
   )

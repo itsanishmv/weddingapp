@@ -11,12 +11,19 @@ function Modal() {
   const [phone, setPhone] = useState();
   const [comments, setComments] = useState();
   const [showConfetti, setShowConfetti] = useState(false);
-  const [successMsg, setSuccessMsg] = useState(false);
-  const [notgoingMsg, setNotGoingMsg] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { going, setGoing, showButtons, setShowButtons, setShowRsvp } =
-    useContext(dataSharingPoint);
+  const {
+    going,
+    setGoing,
+    showButtons,
+    setShowButtons,
+    setShowRsvp,
+    successMsg,
+    setSuccessMsg,
+    notgoingMsg,
+    setNotGoingMsg,
+  } = useContext(dataSharingPoint);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -49,6 +56,7 @@ function Modal() {
       setLoading(false);
       setTimeout(() => {
         setShowRsvp(false);
+        setSuccessMsg(false);
       }, 3500);
       setSuccessMsg(true);
       setShowConfetti(true);
@@ -67,10 +75,13 @@ function Modal() {
       setLoading(false);
       setTimeout(() => {
         setShowRsvp(false);
+        setNotGoingMsg(false);
       }, 2000);
+
       setNotGoingMsg(true);
     });
   }
+
   const disabledbutton = !name || !phone;
   return (
     <div className=" h-screen fixed lg:w-[50%] w-[100%]  bg-black-opacity-50 flex justify-center items-center">
@@ -94,7 +105,7 @@ function Modal() {
             </button>
           </div>
         )}
-        {successMsg && (
+        {successMsg && !showButtons && (
           <div className="flex items-center">
             <Confetti
               run={showConfetti}
@@ -106,7 +117,7 @@ function Modal() {
             <SuccessMsg />
           </div>
         )}
-        {notgoingMsg && <SuccessMsg notgoing={true} />}
+        {notgoingMsg && !showButtons && <SuccessMsg notgoing={true} />}
         {(going || !going) && !showButtons && !successMsg && !notgoingMsg && (
           <>
             <form className="flex flex-col justify-evenly">
