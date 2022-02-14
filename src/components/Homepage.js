@@ -36,7 +36,7 @@ function Homepage() {
       <div>
         <img
           className="h-screen w-[100%] object-cover"
-          src="weddingcard.jpg"
+          src="0001.jpg"
           alt="card"
         />
       </div>
