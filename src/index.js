@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -7,9 +7,13 @@ import Store from './components/Store'
 
 ReactDOM.render(
   <React.StrictMode>
+   
     <Store>
-      <App />
-    </Store>
+   
+        <App />
+  
+      </Store>
+  
   </React.StrictMode>,
   document.getElementById('root')
 );

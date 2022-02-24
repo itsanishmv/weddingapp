@@ -84,7 +84,7 @@ function Modal() {
 
   const disabledbutton = !name || !phone;
   return (
-    <div className=" h-screen fixed lg:w-[50%] w-[100%]  bg-black-opacity-50 flex justify-center items-center">
+    <div className=" h-screen fixed lg:w-[50%] w-[100%]  bg-black-opacity-50 flex justify-center items-center z-30">
       <div
         ref={ref}
         className=" w-[90%] rounded-lg h-80  flex justify-center shadow-2xl bg-white opacity-100 py-5"

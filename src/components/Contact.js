@@ -15,19 +15,19 @@ function Contact() {
   }, []);
 
   return (
-      <div ref={ref} className=' h-20 w-80 shadow-2xl flex justify-evenly items-center bg-white rounded-lg   '>
+      <div ref={ref} className=' h-20 w-80  shadow-2xl flex justify-evenly items-center bg-white rounded-lg   '>
           <div className='flex flex-col text-xl font-bold '>
-            <h1>Anish</h1> 
+            <h1>Vimal</h1> 
             <span>
-                9560586929
+                9891526103
             </span>
           </div>
 
           <div className='flex justify-between'>
-              <a href="tel:9560586929">
-                  <img className='h-7 w-7' src="phone-call.png" alt="" />
+              <a href="tel:9891526103">
+                  <img className='h-7 w-7' src="telephone.png" alt="" />
               </a>
-                <a   href="https://wa.me/+919560586929">
+                <a   href="https://wa.me/+919891526103">
                   <img className='h-7 w-7 ml-[50%]' src="whatsapp.png" alt="" />
                 </a>
           </div>
