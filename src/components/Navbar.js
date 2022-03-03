@@ -33,7 +33,7 @@ function Navbar() {
         </a>
       </button>
       <button onClick={handleOnclick} className="flex flex-col items-center">
-        {showArrow && <img className="fixed h-20 mt-[-20px] text-white " src="ripple.svg" alt="alt" />}
+        {showArrow && <img className="absolute -top-2 h-20  text-white " src="ripple.svg" alt="alt" />}
         <img className={"h-6 "} src="email.png" alt="invite" />
         <span className="text-xs text-white ">Rsvp</span>
       </button>
