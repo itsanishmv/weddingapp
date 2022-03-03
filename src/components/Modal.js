@@ -55,7 +55,7 @@ function Modal() {
     addDoc(col, {
       name: name,
       count: count ?  Number(count) : 1,
-      phone: phone,
+      // phone: phone,
       comment: comments ? comments : false,
       timestamp: serverTimestamp(),
       createdAT : Date.now()
@@ -76,7 +76,7 @@ function Modal() {
     addDoc(col, {
       name: name,
       count: count ? Number(count) : 1,
-      phone: phone,
+      // phone: phone,
       comment: comments ? comments : false,
       timestamp: serverTimestamp(),
       createdAT : Date.now()
@@ -91,7 +91,7 @@ function Modal() {
     });
   }
 
-  const disabledbutton = !name || !phone || !count;
+  const disabledbutton = !name || !count;
   return (
     <div className=" h-screen fixed lg:w-[50%] w-[100%]  bg-black-opacity-50 flex justify-center items-center z-30">
       <div
@@ -139,13 +139,13 @@ function Modal() {
                 placeholder="name"
               />
 
-              <input
+              {/* <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
                 type="number"
                 placeholder="contact"
-              />
+              /> */}
               <select
                 value={count}
                 onChange={(e) => setCount(e.target.value)}

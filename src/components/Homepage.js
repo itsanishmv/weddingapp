@@ -83,7 +83,7 @@ function Homepage() {
       </div>
       <div className="border-2 border-[#262526]">
  
-        <img className=" -mt-24" src="invitation 04.jpg" alt="invite" />
+        <img className=" -mt-24" src="invitation 05.jpg" alt="invite" />
       
       </div>
       <h1 className=" text-red-500 flex animate-bounce mt-5 font-bold justify-center" >(Please Rsvp by clicking the RSVP icon below)</h1>
