@@ -2,105 +2,101 @@ import React, { useContext, useEffect, useState } from "react";
 import { dataSharingPoint } from "./Context";
 import Modal from "./Modal";
 import { db } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
-import Music from "./Music";
+import { collection, getDocs , orderBy, query } from "firebase/firestore";
 import Avatar from "react-avatar";
+import { formatDistance } from 'date-fns'
 
 function Homepage() {
-  const { showRsvp, music, successMsg, notgoingMsg, setVideoEnded } =
-    useContext(dataSharingPoint);
+  const { showRsvp, music, successMsg, notgoingMsg, setVideoEnded } = useContext(dataSharingPoint);
   const [goingCount, setGoingCount] = useState([]);
   const [notGoing, setNotgoing] = useState([]);
-  const [scroll, setScroll] = useState(false);
-
+  const [countMember, setCountMember] = useState(false);
+  
+  
   useEffect(() => {
+
     const getCol = collection(db, "going");
-    const getcol2 = collection(db, "not going");
+    const getcol2 = collection(db, "notGoing");
+    const q1 = query(getCol, orderBy('timestamp','desc'))
+    const q2 = query(getcol2 , orderBy('timestamp','desc'))
+    
     function getData() {
-      getDocs(getCol).then((snapshot) => {
+      getDocs(q1).then((snapshot) => {
         setGoingCount(snapshot.docs.map((data) => data.data()));
       });
-      getDocs(getcol2).then((snapshot) => {
+      getDocs(q2).then((snapshot) => {
         setNotgoing(snapshot.docs.map((data) => data.data()));
       });
+      
     }
+   
+    getData()
+  
+  }, [successMsg, notgoingMsg])
 
-    getData();
-  }, [successMsg, notgoingMsg]);
 
-  function startScrolling(fn, delay) {
-    let timer;
-    let timer2;
-    return function () {
-      clearTimeout(timer);
-      clearInterval(timer2);
-      timer = setTimeout(() => {
-        timer2 = setInterval(() => {
-          fn();
-        }, 500);
-      }, delay);
-    };
-  }
-  function autoscroll() {
-    console.log("scrolling");
-    const commentBox = document.getElementById("scroll");
-    commentBox.scrollBy({
-      top: 20,
-      behavior: "smooth",
-    });
-  }
-  const debounce = startScrolling(autoscroll, 3000);
+
+  const GoingMemberCount = goingCount.reduce((acc, curr) => curr.count  + acc , 0)
+
+  // function startScrolling(fn, delay) {
+  //   let timer;
+  //   let timer2;
+  //   return function () {
+  //     clearTimeout(timer);
+  //     clearInterval(timer2);
+  //     timer = setTimeout(() => {
+  //       timer2 = setInterval(() => {
+  //         fn();
+  //       }, 600);
+  //     }, delay);
+  //   };
+  // }
+  // function autoscroll() {
+  //   console.log("scrolling");
+  //   const commentBox = document.getElementById("scroll");
+  //   commentBox.scrollBy({
+  //     top: 20,
+  //     behavior: "smooth",
+  //   });
+  // }
+  // const debounce = startScrolling(autoscroll, 3000);
+// console.log(cyclicArray)
 
   return (
     <div>
-      {music && <Music />}
+      
       {showRsvp && (
         <div className={("h-screen", showRsvp && "bg-black")}>
           <Modal />
         </div>
       )}
 
-      <div className=" bg-[#252425] flex items-center justify-center h-screen ">
+      <div className=" flex items-center justify-center bg-[#262526] h-screen ">
         <video
           disableRemotePlayback
           onEnded={() => setVideoEnded(true)}
           autoPlay
           id="video"
-          src="compressed.mp4"
-          className=" h-full border-white "
+          src="compressed v2.mp4"
+          className=" "
         ></video>
       </div>
-      <div className="flex flex-col items-center ">
-        <h1 className="text-center font-cursive text-medium">
-          We request the honor of your presence at the marriage of our children
-        </h1>
-        <p className="text-2xl font-cursive border-2 p-3 rounded shadow-lg font-extrabold">
-          Vandana & Sujith
-        </p>
+      <div className="border-2 border-[#262526]">
+ 
+        <img className=" -mt-24" src="invitation 04.jpg" alt="invite" />
+      
       </div>
-      <div className="mt-[50px] flex flex-col justify-center items-center">
-        <div className="flex flex-col items-center">
-          <h1 className="font-cursive text-lg">Venue</h1>
-          <h1>Guruvayoor temple , Mayur Vihar Phase-1 , Delhi </h1>
-        </div>
-        <div className="flex flex-col items-center">
-          <h1 className="font-cursive text-lg">Timing</h1>
-          <h1>12:00 p.m</h1>
-        </div>
-        <div></div>
-      </div>
+      <h1 className=" text-red-500 flex animate-bounce mt-5 font-bold justify-center" >(Please Rsvp by clicking the RSVP icon below)</h1>
       <div className="flex mt-[50px] flex-col ">
-        <h1 className="flex justify-center font-cursive text-2xl">
+        <h1 className="flex justify-center font-cursive text-4xl">
           Attendance
         </h1>
         <div className="flex justify-evenly  font-serif mt-[20px] ">
-          <h1 className="font-normal flex flex-col  items-center">
-            <h1 className="font-bold text-4xl">{goingCount?.length}</h1> Going
+          <h1 className="font-normal flex flex-col justify-center items-center">
+            <h1 className="font-bold font-fantasy text-4xl">{ GoingMemberCount }</h1> Going
           </h1>
-
-          <h1 className="font-normal flex flex-col  items-center">
-            <h1 className="font-bold text-4xl">{notGoing?.length}</h1> Not going
-          </h1>
+          {/* <img className="  h-56 absolute" src="webGif.gif" alt="" />
+          <img className=" h-45 absolute" src="webGif.gif" alt="" /> */}
         </div>
       </div>
       <br />
@@ -108,18 +104,26 @@ function Homepage() {
       <br />
       <br />
       <br />
-      <h1 className="flex items-center font-cursive justify-center text-2xl mb-10 ">
+      <img className="-z-10  absolute h-96  flex ml-10 " src="webGif.gif" alt="" />
+      <img className="-z-10  absolute h-96  flex ml-10 " src="webGif.gif" alt="" />
+
+      <h1 className="flex items-center font-cursive justify-center text-4xl mb-10  ">
         Wishes
       </h1>
+    
+     
       <div
         id="scroll"
-        className="flex flex-col items-center h-80  overflow-y-scroll  "
-        onTouchMove={debounce}
+        className="flex flex-col items-center h-80 overflow-y-scroll  "
       >
+        
         {goingCount.concat(notGoing).map((items) => (
+          
           <>
+            
             {items.comment && (
-              <div className="flex mt-2 bg-white p-2 shadow-xl w-[300px] ring-lime-300 ">
+              
+              <div className={formatDistance(items.createdAT, new Date()) === 'less than a minute' ? 'animate-animateColor flex mt-2 p-2 shadow-xl w-[300px]' : "  flex mt-2 bg-white p-2 shadow-xl w-[300px] ring-lime-300 "}>
                 <Avatar
                   name={items.name}
                   round={true}
@@ -127,14 +131,16 @@ function Homepage() {
                   style={{ Color: "black" }}
                 />
                 <div className="flex flex-col ml-3 w-[200px] ">
-                  <h1 className="font-bold capitalize  ">{items.name}</h1>
-
+                  <h1 className="font-bold capitalize">{items.name}</h1>
                   <p className="italic  break-words">{items.comment}</p>
+                  <p className="text-xs mt-1">{formatDistance(items.createdAT, new Date())} ago</p>
                 </div>
+               
               </div>
             )}
           </>
         ))}
+       
       </div>
       <br />
       <br />

@@ -5,11 +5,11 @@ function SuccessMsg({ notgoing }) {
     <div className="flex items-center">
       {notgoing ? (
         <h1 className="text-lg font-semibold text-center">
-          we completely understand your situation 😉
+          We completely understand your situation 😉
         </h1>
       ) : (
-        <h1 className="text-lg font-semibold">
-          You've been Successfully added🎉{" "}
+        <h1 className="text-sm font-semibold">
+          Thank you, we are looking forward to host you🎉
         </h1>
       )}
     </div>

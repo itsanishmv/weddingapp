@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { dataSharingPoint } from "./Context";
 import { db } from "./firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc,serverTimestamp } from "firebase/firestore";
 import Confetti from "react-confetti";
 import SuccessMsg from "./SuccessMsg";
 
+
+
 function Modal() {
   const [name, setName] = useState();
-  const [email, setEmail] = useState();
+  const [count, setCount] = useState();
   const [phone, setPhone] = useState();
   const [comments, setComments] = useState();
   const [showConfetti, setShowConfetti] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+
+ 
 
   const {
     going,
@@ -49,9 +54,11 @@ function Modal() {
     const col = collection(db, "going");
     addDoc(col, {
       name: name,
-      email: email ? email : "no-Email",
+      count: count ?  Number(count) : 1,
       phone: phone,
       comment: comments ? comments : false,
+      timestamp: serverTimestamp(),
+      createdAT : Date.now()
     }).then(() => {
       setLoading(false);
       setTimeout(() => {
@@ -65,12 +72,14 @@ function Modal() {
   function handleSubmitNotGoing(e) {
     setLoading(true);
     e.preventDefault();
-    const col = collection(db, "not going");
+    const col = collection(db, "notGoing");
     addDoc(col, {
       name: name,
-      email: email ? email : " no-Email",
+      count: count ? Number(count) : 1,
       phone: phone,
       comment: comments ? comments : false,
+      timestamp: serverTimestamp(),
+      createdAT : Date.now()
     }).then(() => {
       setLoading(false);
       setTimeout(() => {
@@ -82,7 +91,7 @@ function Modal() {
     });
   }
 
-  const disabledbutton = !name || !phone;
+  const disabledbutton = !name || !phone || !count;
   return (
     <div className=" h-screen fixed lg:w-[50%] w-[100%]  bg-black-opacity-50 flex justify-center items-center z-30">
       <div
@@ -92,16 +101,17 @@ function Modal() {
         {showButtons && (
           <div ref={ref} className="flex flex-col justify-evenly">
             <button
-              className=" p-5 rounded bg-green-400 text-white  font-bold text-xl"
+              className=" p-5 rounded bg-green-400 text-white shadow-lg  font-bold text-xl"
               onClick={() => handleBtn()}
             >
               Going
             </button>
             <button
-              className="ring-2 ring-white p-5 rounded bg-slate-100 text-lg   "
+              className=" ring-white p-5 rounded bg-slate-100 text-lg shadow-lg font-medium  "
               onClick={() => handleBtn2()}
             >
-              Not Going
+              Not going
+             
             </button>
           </div>
         )}
@@ -136,19 +146,26 @@ function Modal() {
                 type="number"
                 placeholder="contact"
               />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
-                type="email"
-                placeholder="email (Optional)"
-              />
+              <select
+                value={count}
+                onChange={(e) => setCount(e.target.value)}
+                className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400 bg-white"
+                name="select no of persons"
+                placeholder="hehehe"
+              >
+                <option  disabled selected >  number of members</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+
+              </select>
               <textarea
                 value={comments}
                 onChange={(e) => setComments(e.target.value)}
                 className="w-{100%] p-2 rounded-md outline-none border-b focus:border-gray-400"
                 type="comments"
-                placeholder="leave a message ..."
+                placeholder="leave a message ... (optional)"
               />
               <div className="flex justify-between mt-4">
                 {!going && !showButtons && (
