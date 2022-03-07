@@ -77,7 +77,7 @@ function Homepage() {
           onEnded={() => setVideoEnded(true)}
           autoPlay
           id="video"
-          src="compressed-v2.mp4"
+          src="https://firebasestorage.googleapis.com/v0/b/wedding-app-158b3.appspot.com/o/compressed-v2.mp4?alt=media&token=b47b7cea-3ecc-477a-901c-2ba91eb7398c"
           className=" "
           type="video/mp4"
         ></video>
