@@ -79,6 +79,7 @@ function Homepage() {
           id="video"
           src="compressed v2.mp4"
           className=" "
+          type="video/mp4"
         ></video>
       </div>
       <div className="border-2 border-[#262526]">
