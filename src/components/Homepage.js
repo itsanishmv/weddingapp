@@ -77,7 +77,7 @@ function Homepage() {
           onEnded={() => setVideoEnded(true)}
           autoPlay
           id="video"
-          src="compressed v2.mp4"
+          src="compressed-v2.mp4"
           className=" "
           type="video/mp4"
         ></video>
