@@ -3,16 +3,16 @@ import { dataSharingPoint } from "./Context";
 
 function Music() {
   const ref = useRef();
-  const { setMusic, start,open ,mute , setMute } = useContext(dataSharingPoint);
-  useEffect(() => {
-    function outsideClick(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setMusic(false);
-      }
-    }
-    document.addEventListener("click", outsideClick);
+  const { setMusic, start,open ,mute , setMute , videoload} = useContext(dataSharingPoint);
+  // useEffect(() => {
+  //   function outsideClick(event) {
+  //     if (ref.current && !ref.current.contains(event.target)) {
+  //       setMusic(false);
+  //     }
+  //   }
+  //   document.addEventListener("click", outsideClick);
    
-  }, []);
+  // }, []);
   useEffect(() => {
     if (mute) {
       const Audio = document.querySelector('audio')
@@ -29,7 +29,7 @@ function Music() {
     <div ref={ref} className="flex ">
      
         {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/fvL7kDQsPeo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-        <audio className="audio" src="audio.mp3" ></audio>
+      <audio className="audio" src="audio.mp3" ></audio>
     </div>
 
   );

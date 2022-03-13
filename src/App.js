@@ -10,7 +10,7 @@ import Mute from "./components/Mute";
 import Music from "./components/Music";
 
 function App() {
-  const { showContact, setShowArrow, open, videoEnded } =
+  const { showContact, setShowArrow, open, videoEnded,videoload } =
     useContext(dataSharingPoint);
   const [bool, setBool] = useState(false);
 
@@ -31,7 +31,7 @@ function App() {
   }, [videoEnded]);
 
   useEffect(() => {
-    if (open) {
+    if (open && videoload) {
       autoAudioPlayBack();
     }
     function autoAudioPlayBack() {
@@ -39,7 +39,7 @@ function App() {
       Audio.autoplay = true;
       Audio.load();
     }
-  }, [open]);
+  }, [open,videoload]);
   // document.addEventListener("contextmenu", (event) => event.preventDefault());
 
   window.addEventListener("scroll", () => {
@@ -53,7 +53,8 @@ function App() {
       {!open && <WelcomePage />}
       {open && (
         <div className=" lg:ml-[25%] scrollbar-none  items-center overflow-y-scroll  w-[100%] sm:w-[100%] shadow-black shadow-md lg:w-[50%]">
-          <Music />
+         {videoload &&  <Music />}
+          
           <div className="">
             <Mute />
           </div>

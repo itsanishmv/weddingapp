@@ -15,10 +15,11 @@ function Store({ children }) {
   const [showArrow, setShowArrow] = useState(false)
   const [open, setOpen] = useState(false)
   const [videoEnded, setVideoEnded] = useState(false)
-  const [mute , setMute] = useState(false)
+  const [mute, setMute] = useState(false)
+  const [videoload, setVideoLoad] = useState(false);
   
   return (
-    <dataSharingPoint.Provider value={{mute , setMute,videoEnded , setVideoEnded,open, setOpen,showArrow , setShowArrow,showContact , setShowContact,notgoingMsg, setNotGoingMsg,successMsg, setSuccessMsg,start , setStart,music , setMusic,going , setGoing, showRsvp, setShowRsvp,showButtons , setShowButtons}}>
+    <dataSharingPoint.Provider value={{videoload, setVideoLoad,mute , setMute,videoEnded , setVideoEnded,open, setOpen,showArrow , setShowArrow,showContact , setShowContact,notgoingMsg, setNotGoingMsg,successMsg, setSuccessMsg,start , setStart,music , setMusic,going , setGoing, showRsvp, setShowRsvp,showButtons , setShowButtons}}>
       {children}
     </dataSharingPoint.Provider>
   );

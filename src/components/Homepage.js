@@ -7,8 +7,15 @@ import Avatar from "react-avatar";
 import { formatDistance } from "date-fns";
 
 function Homepage() {
-  const { showRsvp, music, successMsg, notgoingMsg, setVideoEnded } =
-    useContext(dataSharingPoint);
+  const {
+    showRsvp,
+    music,
+    successMsg,
+    notgoingMsg,
+    setVideoEnded,
+    videoload,
+    setVideoLoad,
+  } = useContext(dataSharingPoint);
   const [goingCount, setGoingCount] = useState([]);
   const [notGoing, setNotgoing] = useState([]);
   const [countMember, setCountMember] = useState(false);
@@ -60,6 +67,10 @@ function Homepage() {
   // const debounce = startScrolling(autoscroll, 3000);
   // console.log(cyclicArray)
 
+  function handleVideoLoad() {
+    setVideoLoad(true);
+  }
+
   return (
     <div>
       {showRsvp && (
@@ -69,8 +80,16 @@ function Homepage() {
       )}
 
       <div className=" flex items-center justify-center bg-[#262526] h-screen ">
+        {!videoload && (
+          <div className="flex items-center justify-center flex-col z-30 ">
+            <img src="videoload.svg" alt="" />
+            <p className="text-white -mt-10 ">Loading...</p>
+          </div>
+        )}
         <video
-          preload="auto"
+          className={`${videoload ? "flex" : "hidden"}`}
+          onPlay={handleVideoLoad}
+          preload="none"
           disableRemotePlayback
           onEnded={() => setVideoEnded(true)}
           autoPlay
