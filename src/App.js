@@ -31,15 +31,15 @@ function App() {
   }, [videoEnded]);
 
   useEffect(() => {
-    if (open && videoload) {
+    if (open) {
       autoAudioPlayBack();
     }
     function autoAudioPlayBack() {
       const Audio = document.querySelector("audio");
-      Audio.autoplay = true;
+      Audio.autoplay = videoload;
       Audio.load();
     }
-  }, [open,videoload]);
+  }, [open  ,videoload]);
   // document.addEventListener("contextmenu", (event) => event.preventDefault());
 
   window.addEventListener("scroll", () => {
@@ -53,8 +53,7 @@ function App() {
       {!open && <WelcomePage />}
       {open && (
         <div className=" lg:ml-[25%] scrollbar-none  items-center overflow-y-scroll  w-[100%] sm:w-[100%] shadow-black shadow-md lg:w-[50%]">
-         {videoload &&  <Music />}
-          
+           <Music />
           <div className="">
             <Mute />
           </div>
