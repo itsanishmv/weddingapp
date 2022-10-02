@@ -17,7 +17,7 @@ This app is a personalised invitation for events 🎉 which makes it easy to sha
 
 ## Demo
 
-Insert gif or link to demo
+
 ![Alt Text](https://im3.ezgif.com/tmp/ezgif-3-b817cbe9f0.gif)
 
   
