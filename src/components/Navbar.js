@@ -21,7 +21,7 @@ function Navbar() {
   }
 
   return (
-    <div className="lg:w-[50%] bg-[#252425] rounded-sm flex fixed w-[100%] bottom-0  px-4 py-2 justify-between">
+    <div className="lg:w-[50%] bg-[#B58C57] rounded-sm flex fixed w-[100%] bottom-0  px-4 py-2 justify-between">
       <button
         onClick={handleContact}
         className="flex flex-col items-center tap"
