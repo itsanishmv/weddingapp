@@ -99,7 +99,7 @@ function Homepage() {
   function handleVideoLoad() {
     setVideoLoad(true);
   }
-
+  // bg-gradient-to-b from-black-top via-black-top to-white
   return (
     <div>
       {showRsvp && (
@@ -108,7 +108,7 @@ function Homepage() {
         </div>
       )}
       {/* bg-gradient-to-b from-black-top via-black-top to-white */}
-      <div className=" flex items-center justify-center h-screen bg-gradient-to-b from-black-top via-black-top to-white">
+      <div className=" h-[100vh]  ">
         {/* <div className="text-black-top"></div> */}
         {!videoload && (
           <div className="flex items-center  justify-center  flex-col z-30 ">
@@ -117,7 +117,9 @@ function Homepage() {
           </div>
         )}
         <video
-          className={`${videoload ? "flex " : "hidden"}`}
+          className={`${
+            videoload ? " h-[100vh] w-[100vw] object-fill  " : "hidden"
+          }`}
           onPlay={handleVideoLoad}
           preload="none"
           disableRemotePlayback
@@ -126,16 +128,18 @@ function Homepage() {
           id="video"
           src="compressedShyamili.mp4"
           type="video/mp4"
-        ></video>
+        >
+          {" "}
+        </video>
       </div>
-      <div className=" ">
+      <div className="h-[100vh]  ">
         <img
-          className="object-contain -mt-24"
+          className="object-fill h-[100vh] w-[100vw] "
           src="shyamiliInvite.png"
           alt="invite"
         />
       </div>
-      <h1 className=" text-red-500 flex animate-bounce mt-5 font-bold justify-center">
+      <h1 className=" text-red-500 flex animate-bounce mt-5 font-semibold justify-center items-center text-sm no-wrap">
         (Please Rsvp by clicking the RSVP icon below)
       </h1>
       {}
