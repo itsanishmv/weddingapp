@@ -115,7 +115,7 @@ function Homepage() {
         </div>
       )}
       {/* bg-gradient-to-b from-black-top via-black-top to-white */}
-      <div className=" h-[100vh]  bg-gradient-to-b from-black-top  to-white ">
+      <div className=" h-[100vh]  bg-gradient-to-b from-black-top  to-white  ">
         {/* <div className="text-black-top"></div> */}
         {!videoload && (
           <div className="flex items-center  justify-center  flex-col z-30 ">
@@ -126,7 +126,7 @@ function Homepage() {
         <video
           className={`${
             videoload
-              ? " h-[100vh] w-[100vw] object-contain mix-blend-lighten"
+              ? " h-[100vh] w-[100vw] object-contain mix-blend-lighten "
               : "hidden"
           }`}
           onPlay={handleVideoLoad}
