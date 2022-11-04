@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { dataSharingPoint } from "./Context";
 import Modal from "./Modal";
 import { db } from "./firebase";
@@ -7,6 +7,7 @@ import Avatar from "react-avatar";
 import { formatDistance, formatDistanceToNow, format } from "date-fns";
 
 function Homepage() {
+  const ref = useRef();
   const {
     showRsvp,
     music,
@@ -15,6 +16,7 @@ function Homepage() {
     setVideoEnded,
     videoload,
     setVideoLoad,
+    videoEnded,
   } = useContext(dataSharingPoint);
   const [goingCount, setGoingCount] = useState([]);
   const [notGoing, setNotgoing] = useState([]);
@@ -47,6 +49,11 @@ function Homepage() {
     (acc, curr) => curr.count + acc,
     0
   );
+  useEffect(() => {
+    if (videoEnded) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [videoEnded]);
 
   function countdown() {
     let countTo = new Date("Nov 20 , 2022 10:30:00").getTime();
@@ -132,7 +139,7 @@ function Homepage() {
           {" "}
         </video>
       </div>
-      <div className="h-[100vh]  ">
+      <div ref={ref} className="h-[100vh]  ">
         <img
           className="object-fill h-[100vh] w-[100vw] "
           src="shyamiliInvite.png"

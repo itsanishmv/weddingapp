@@ -10,25 +10,25 @@ import Mute from "./components/Mute";
 import Music from "./components/Music";
 
 function App() {
-  const { showContact, setShowArrow, open, videoEnded,videoload } =
+  const { showContact, setShowArrow, open, videoEnded, videoload } =
     useContext(dataSharingPoint);
   const [bool, setBool] = useState(false);
 
-  useEffect(() => {
-    let timer;
-    if (open && videoEnded) {
-      timer = setTimeout(() => {
-        window.scroll({
-          top: 600,
-          behavior: "smooth",
-        });
-        setShowArrow(true);
-      }, 2000);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [videoEnded]);
+  // useEffect(() => {
+  //   let timer;
+  //   if (open && videoEnded) {
+  //     timer = setTimeout(() => {
+  //       window.scroll({
+  //         top: 600,
+  //         behavior: "smooth",
+  //       });
+  //       setShowArrow(true);
+  //     }, 2000);
+  //   }
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [videoEnded]);
 
   useEffect(() => {
     if (open) {
@@ -39,7 +39,7 @@ function App() {
       Audio.autoplay = videoload;
       Audio.load();
     }
-  }, [open  ,videoload]);
+  }, [open, videoload]);
   // document.addEventListener("contextmenu", (event) => event.preventDefault());
 
   window.addEventListener("scroll", () => {
@@ -53,7 +53,7 @@ function App() {
       {!open && <WelcomePage />}
       {open && (
         <div className=" lg:ml-[25%] scrollbar-none  items-center overflow-y-scroll  w-[100%] sm:w-[100%] shadow-black shadow-md lg:w-[50%]">
-           <Music />
+          <Music />
           <div className="">
             <Mute />
           </div>
