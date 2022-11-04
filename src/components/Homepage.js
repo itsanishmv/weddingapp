@@ -4,10 +4,9 @@ import Modal from "./Modal";
 import { db } from "./firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Avatar from "react-avatar";
-import { formatDistance } from "date-fns";
+import { formatDistance, formatDistanceToNow, format } from "date-fns";
 
 function Homepage() {
-  // console.log(new Date().getDay());
   const {
     showRsvp,
     music,
@@ -20,6 +19,11 @@ function Homepage() {
   const [goingCount, setGoingCount] = useState([]);
   const [notGoing, setNotgoing] = useState([]);
   const [countMember, setCountMember] = useState(false);
+
+  const [day, setDay] = useState(false);
+  const [hours, setHours] = useState(false);
+  const [minutes, setMinutes] = useState(false);
+  const [seconds, setSeconds] = useState(false);
 
   useEffect(() => {
     const getCol = collection(db, "going");
@@ -43,6 +47,30 @@ function Homepage() {
     (acc, curr) => curr.count + acc,
     0
   );
+
+  function countdown() {
+    let countTo = new Date("Nov 20 , 2022 10:30:00").getTime();
+    let now = new Date();
+    const diff = countTo - now;
+
+    const sec = 1000;
+    const min = sec * 60;
+    const hr = min * 60;
+    const day = hr * 24;
+
+    const dday = Math.floor(diff / day);
+    const hhour = Math.floor((diff % day) / hr);
+    const mminute = Math.floor((diff % hr) / min);
+    const sseconds = Math.floor((diff % min) / sec);
+
+    setDay(dday);
+    setHours(hhour);
+    setMinutes(mminute);
+    setSeconds(sseconds);
+  }
+  setInterval(() => {
+    countdown();
+  }, 1000);
 
   // function startScrolling(fn, delay) {
   //   let timer;
@@ -79,43 +107,80 @@ function Homepage() {
           <Modal />
         </div>
       )}
-
-      <div className=" flex items-center justify-center bg-[#262526] h-screen ">
+      {/* bg-gradient-to-b from-black-top via-black-top to-white */}
+      <div className=" flex items-center justify-center h-screen bg-gradient-to-b from-black-top via-black-top to-white">
+        {/* <div className="text-black-top"></div> */}
         {!videoload && (
-          <div className="flex items-center justify-center flex-col z-30 ">
+          <div className="flex items-center  justify-center  flex-col z-30 ">
             <img src="videoload.svg" alt="" />
             <p className="text-white -mt-10 ">Loading...</p>
           </div>
         )}
         <video
-          className={`${videoload ? "flex" : "hidden"}`}
+          className={`${videoload ? "flex " : "hidden"}`}
           onPlay={handleVideoLoad}
           preload="none"
           disableRemotePlayback
           onEnded={() => setVideoEnded(true)}
           autoPlay
           id="video"
-          src="compressed-v2.mp4"
+          src="compressedShyamili.mp4"
           type="video/mp4"
         ></video>
       </div>
-      <div className="border-2 border-[#262526]">
-        <img className=" -mt-24" src="shyamiliInvite.png" alt="invite" />
+      <div className=" ">
+        <img
+          className="object-contain -mt-24"
+          src="shyamiliInvite.png"
+          alt="invite"
+        />
       </div>
       <h1 className=" text-red-500 flex animate-bounce mt-5 font-bold justify-center">
         (Please Rsvp by clicking the RSVP icon below)
       </h1>
       {}
       <div className="flex mt-[50px] flex-col ">
-        <h1 className="flex justify-center font-cursive text-4xl">
+        <h1 className="flex justify-center font-cursive text-4xl text-[#E7B162]">
           Attendance
         </h1>
         <div className="flex justify-evenly  font-serif mt-[20px] ">
           <h1 className="font-normal flex flex-col justify-center items-center">
-            <h1 className="font-bold font-fantasy text-4xl">
+            <h1 className=" font-bold text-6xl bg-[#EDE6E4] rounded-md p-4">
               {GoingMemberCount}
             </h1>{" "}
-            Going
+            <h1 className="font-semibold text-lg"> going</h1>
+          </h1>
+          {/* <img className="  h-56 absolute" src="webGif.gif" alt="" />
+          <img className=" h-45 absolute" src="webGif.gif" alt="" /> */}
+        </div>
+      </div>
+      <div className="flex mt-[50px] flex-col ">
+        <h1 className="flex justify-center font-cursive text-4xl text-[#E7B162]">
+          Countdown
+        </h1>
+        <div className="flex justify-evenly  font-serif mt-[20px] ">
+          <h1 className="font-normal flex flex-col justify-center items-center">
+            <h1 className=" font-bold text-6xl bg-[#EDE6E4] rounded-md p-4">
+              <div className="flex w-[100%]  justify-between border-2 gap-6">
+                <div className="flex flex-col items-center">
+                  <p className="text-bold font-extrabold text-4xl">{day}</p>
+                  <h1 className="text-sm">Days</h1>
+                </div>
+                <div className="flex flex-col items-center">
+                  <p className="text-bold font-extrabold text-4xl">{hours}</p>
+                  <h1 className="text-sm">Hrs</h1>
+                </div>
+                <div className="flex flex-col items-center">
+                  <p className="text-bold font-extrabold text-4xl">{minutes}</p>
+                  <h1 className="text-sm">Min</h1>
+                </div>
+                <div className="flex flex-col items-center">
+                  <p className="text-bold font-extrabold text-4xl">{seconds}</p>
+                  <h1 className="text-sm">Secs</h1>
+                </div>
+              </div>
+            </h1>{" "}
+            <h1 className="font-semibold text-lg"> </h1>
           </h1>
           {/* <img className="  h-56 absolute" src="webGif.gif" alt="" />
           <img className=" h-45 absolute" src="webGif.gif" alt="" /> */}
@@ -179,8 +244,8 @@ function Homepage() {
       <br />
       <br />
       <br />
-      <div className="text-white flex flex-col items-center justify-center h-20 text-sm font-bold bg-[#470c18]">
-        <h1>Developed with ❤ by Anish</h1>
+      <div className="text-white flex flex-col items-center justify-center h-15 text-sm font-bold bg-[#470c18]">
+        <h1>Developed with ❤ in Kerala</h1>
         <h1 className="mt-1">Email - aanishmv@gmail.com</h1>
       </div>
       <br />
