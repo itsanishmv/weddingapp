@@ -133,7 +133,7 @@ function Homepage() {
           onEnded={() => setVideoEnded(true)}
           autoPlay
           id="video"
-          src="shyamiliintrovid.mp4"
+          src="IntroVid.mp4"
           type="video/mp4"
         >
           {" "}
