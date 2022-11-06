@@ -125,9 +125,7 @@ function Homepage() {
         )}
         <video
           className={`${
-            videoload
-              ? " h-[100vh] w-[100vw] object-contain mix-blend-lighten "
-              : "hidden"
+            videoload ? " h-[100vh] w-[100vw] object-cover " : "hidden"
           }`}
           onPlay={handleVideoLoad}
           preload="none"
@@ -135,7 +133,7 @@ function Homepage() {
           onEnded={() => setVideoEnded(true)}
           autoPlay
           id="video"
-          src="compressedShyamili.mp4"
+          src="shyamiliintrovid.mp4"
           type="video/mp4"
         >
           {" "}
@@ -144,7 +142,7 @@ function Homepage() {
       </div>
       <div ref={ref} className="h-[100vh]  ">
         <img
-          className="object-fill h-[100vh] w-[100vw] "
+          className="object-fill h-[100vh] w-[100vw] md:object-contain"
           src="shyamiliInvite.png"
           alt="invite"
         />
