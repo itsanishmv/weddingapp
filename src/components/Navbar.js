@@ -21,7 +21,7 @@ function Navbar() {
   }
 
   return (
-    <div className="lg:w-[50%] bg-[#B58C57] rounded-sm flex fixed w-[100%] bottom-0  px-4 py-4 justify-between">
+    <div className="lg:w-[50%] bg-[#B58C57] rounded-sm flex fixed w-[100%] bottom-0  px-4 h-[75px] justify-between items-center ">
       <button
         onClick={handleContact}
         className="flex flex-col items-center tap"
@@ -45,7 +45,7 @@ function Navbar() {
       <button onClick={handleOnclick} className="flex flex-col items-center">
         {showArrow && (
           <img
-            className="absolute -top-2 h-20  text-white "
+            className="absolute -mt-6 h-20  text-white "
             src="ripple.svg"
             alt="alt"
           />

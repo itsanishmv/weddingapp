@@ -17,6 +17,7 @@ function Homepage() {
     videoload,
     setVideoLoad,
     videoEnded,
+    setShowArrow,
   } = useContext(dataSharingPoint);
   const [goingCount, setGoingCount] = useState([]);
   const [notGoing, setNotgoing] = useState([]);
@@ -52,6 +53,7 @@ function Homepage() {
   useEffect(() => {
     if (videoEnded) {
       ref.current.scrollIntoView({ behavior: "smooth" });
+      setShowArrow(true);
     }
   }, [videoEnded]);
 
@@ -142,13 +144,13 @@ function Homepage() {
       </div>
       <div ref={ref} className="h-[100vh]  ">
         <img
-          className="object-fill h-[100vh] w-[100vw] md:object-contain"
+          className="object-fill h-[100vh] w-[100vw] "
           src="shyamiliInvite.png"
           alt="invite"
         />
       </div>
       <h1 className=" text-red-500 flex animate-bounce mt-5 font-semibold justify-center items-center text-sm no-wrap">
-        (Please Rsvp by clicking the RSVP icon below)
+        (Please click rsvp button below to mark your presence)
       </h1>
       {}
       <div className="flex mt-[50px] flex-col ">
@@ -251,13 +253,9 @@ function Homepage() {
           </>
         ))}
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div className="text-white flex flex-col items-center justify-center h-15 text-sm font-bold bg-[#470c18]">
-        <h1>Developed with ❤ in Kerala</h1>
+
+      <div className="flex flex-col py-2 h-20 border-[1px] text-sm font-bold items-center  shadow-md">
+        <h1>Developed with ❤ by Anish</h1>
         <h1 className="mt-1">Email - aanishmv@gmail.com</h1>
       </div>
       <br />
